@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+  <br>
+  <p class="intro">Добре дошли! Моля, изберете тест от навигационното меню.</p>
+  <p class="intro">По-долу са онагледени резултатите от предишните Ви тестове, ако има такива.</p>
+  <br>
+  <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Тест</th>
+                <th scope="col">Брой Верни</th>
+                <th scope="col">Брой грешни</th>
+                <th scope="col">Дата и час</th>
+                <th scope="col">Успеваемост</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in info %}
+            <tr>
+                <td>{{ i[0] }}</td>
+                <td>{{ i[1] }}</td>
+                <td>{{ i[2] }}</td>
+                <td>{{ i[3] }}</td>
+                <td>{{ i[4] }}%</td>
+            </tr>
+            {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %}

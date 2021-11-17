@@ -1,0 +1,131 @@
+{% extends "layout1.html" %}
+
+{% block main %}
+
+    <script>
+
+        let verni = 0;
+        let greshni = 0;
+        let procenti = 0;
+
+
+        function check(name){
+          var option, correct;
+
+          correct = document.getElementById("correct" + name);
+          option = document.querySelector('input[name=' + CSS.escape(name) + ']:checked').value;
+
+          if (option == correct.getAttribute('value')){
+            document.getElementById(name).style.backgroundColor = "LightGreen";
+            document.getElementById("correct" + name).className = "pravilno";
+          }else{
+            document.getElementById(name).style.backgroundColor = "Tomato";
+            document.getElementById("correct" + name).className = "greshno";
+          }
+
+          verni = document.querySelectorAll(".pravilno").length;
+          greshni = document.querySelectorAll(".greshno").length;
+          procenti = (Math.round((verni/(verni+greshni))*100)/100)*100;
+
+
+          document.getElementById("verni").innerHTML = "Брой верни: " + verni;
+          document.getElementById("greshni").innerHTML = "Брой грешни: " + greshni;
+          document.getElementById("procenti").innerHTML = "Успеваемост: " + procenti + "%";
+          document.getElementsByName("broi_verni")[0].value = verni;
+          document.getElementsByName("broi_greshni")[0].value = greshni;
+          document.getElementsByName("uspevaemost")[0].value = procenti;
+        }
+
+
+      window.onload =
+        function count(){
+
+          // Set the date we're counting down to
+          var countDownDate = new Date().getTime() + 3600000;
+
+          // Update the count down every 1 second
+          var x = setInterval(function() {
+
+            // Get today's date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Output the result in an element with id="timeleft"
+            document.getElementById("timeleft").innerHTML = hours + "h "
+            + minutes + "m " + seconds + "s ";
+
+            // If the count down is over, write some text
+            if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("timeleft").innerHTML = "EXPIRED";
+            }
+          }, 1000);
+
+        }
+
+
+    </script>
+      <nav class="vqrno">
+        <ul>
+          <li class="nav-item" id="funkciq">{{ funkciq }}</li>
+          <li class="nav-item" id="verni"></li>
+          <li class="nav-item" id="greshni"></li>
+          <li class="nav-item" id="procenti"></li>
+          <li class="nav-item" id="timeleft"></li>
+          </ul>
+          <form class="zavurshi" action="/zavurshi" method="post">
+            <button id="zavurshi" class="btn btn-dark" type="submit">Завърши</button>
+            <input type="hidden" name="funkciq" value="{{ funkciq }}">
+            <input type="hidden" name="broi_verni" value="0">
+            <input type="hidden" name="broi_greshni" value="0">
+            <input type="hidden" name="uspevaemost" value="0">
+          </form>
+      </nav>
+            {% for test,answers in data %}
+            <form class="question" id="{{ loop.index }}">
+                {{ loop.index }}{{ ". " }}{{ test[0][0]}}
+                <div class="answers">
+                  <input class="option" type="radio" name="{{ loop.index }}" onclick="check(this.name)"
+                  value="{{ answers[0] }}">
+                    <label class="answer">
+                    {{ answers[0] }}
+                    </label>
+                </div>
+                <div class="answers">
+
+                  <input class="option" type="radio" name="{{ loop.index }}" onclick="check(this.name)"
+                  value="{{ answers[1] }}">
+                  <label class="answer">
+                    {{ answers[1] }}
+                  </label>
+
+                </div>
+                <div class="answers">
+                  <input class="option" type="radio" name="{{ loop.index }}"  onclick="check(this.name)"
+                  value="{{ answers[2] }}">
+                    <label class="answer">
+                    {{ answers[2] }}
+                    </label>
+                </div>
+                <div class="answers">
+                  <input class="option" type="radio"name="{{ loop.index }}"  onclick="check(this.name)"
+                  value="{{ answers[3] }}">
+                    <label class="answer">
+                    {{ answers[3]}}
+                    </label>
+                </div>
+                <div class="correct" type="hidden" id="{{ "correct" }}{{ loop.index }}" value="{{ test[0][1] }}"></div>
+
+            </form>
+            <br>
+            {% endfor %}
+
+{% endblock %}

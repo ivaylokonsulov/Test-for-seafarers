@@ -1,0 +1,53 @@
+.question{
+    width: 900px;
+    border: 2px Black;
+    margin: auto;
+    font-size: 20px;
+    background-color: Ivory;
+    display: block;
+    border-radius: 20px;
+    padding-left: 20px;
+}
+.option{
+    height: 20px;
+    width: 20px;
+    position: absolute;
+}
+.answer{
+    font-size: 18px;
+    vertical-align: middle;
+    margin-top: -8px;
+    padding-left: 35px;
+    display: inline-block;
+    padding-right: 15px;
+}
+.vqrno{
+    font-size: 20px;
+    background-color: Ivory;
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    overflow: hidden;
+    top: 0;
+}
+li{
+    display: inline-block;
+}
+.zavurshi{
+    margin-top: -43px;
+    float: right;
+}
+.intro{
+    text-align: center;
+}
+.table{
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.login{
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
